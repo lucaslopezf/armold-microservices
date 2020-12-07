@@ -1,6 +1,6 @@
 {
   "name": "armold-test",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Armold test",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,6 +30,7 @@
     "agentkeepalive": "^4.1.3",
     "ajv": "^6.12.4",
     "axios": "^0.20.0",
+    "compression": "^1.7.4",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-winston": "^4.0.5",
