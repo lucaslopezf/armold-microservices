@@ -1,5 +1,5 @@
 import http from 'http';
-import express from 'express';
+import express, { Express } from 'express';
 import 'express-async-errors';
 import { applyMiddleware, applyRoutes } from './util';
 import middlewares from '../../middlewares';
@@ -14,7 +14,7 @@ export const startServer = (
   customizablesMiddlewares?: Wrapper[],
   applyCommonsMiddlewares = true,
   applyCommonsErrors = true
-): void => {
+): Express => {
   if (applyCommonsMiddlewares) applyMiddleware(middlewares, app);
   if (customizablesMiddlewares) applyMiddleware(customizablesMiddlewares, app);
 
@@ -23,4 +23,5 @@ export const startServer = (
 
   const server = http.createServer(app);
   server.listen(port, () => console.log(`Server is running ${port}`));
+  return app;
 };

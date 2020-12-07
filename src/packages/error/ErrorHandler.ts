@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { HTTPClientError } from '.';
 import { logger } from '..';
-import { HttpStatusErrorCode, Environment, ErrorDescription, ErrorCode } from '../../commons/constants';
+import { HttpStatusCode, Environment, ErrorDescription, ErrorCode } from '../../commons/constants';
 import { v1 as uuidv1 } from 'uuid';
 
 export const clientError = (err: Error, res: Response, next: NextFunction): void => {
@@ -29,13 +29,13 @@ export const serverError = (err: Error, res: Response, next: NextFunction): void
     stack: err.stack,
   });
   if (process.env.NODE_ENV === Environment.Production) {
-    res.status(HttpStatusErrorCode.InternalServerError).send({
+    res.status(HttpStatusCode.InternalServerError).send({
       id: errorId,
       message: ErrorDescription.InternalServerError,
       code: ErrorCode.InternalServerError,
     });
   } else {
-    res.status(HttpStatusErrorCode.InternalServerError).send({
+    res.status(HttpStatusCode.InternalServerError).send({
       message: err.message,
       code: ErrorCode.InternalServerError,
     });

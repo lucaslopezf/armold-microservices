@@ -1,11 +1,11 @@
-export interface HttpCienciaError {
+export interface HttpArmoldError {
   id: string;
   status: number;
   message?: string;
-  errors?: CienciaError[];
+  errors?: ArmoldError[];
 }
 
-export interface CienciaError {
+export interface ArmoldError {
   detail?: string;
   code: string;
 }

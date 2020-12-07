@@ -1,16 +1,16 @@
 import { HTTPClientError } from './HTTPClientError';
-import { HttpStatusErrorCode } from '../../commons/constants';
-import { CienciaError, HttpCienciaError } from '.';
+import { HttpStatusCode } from '../../commons/constants';
+import { ArmoldError, HttpArmoldError } from '.';
 
-export class HTTPCienciaError extends HTTPClientError {
-  statusCode!: HttpStatusErrorCode;
-  readonly validationErrors?: HttpCienciaError;
+export class HTTPArmoldError extends HTTPClientError {
+  statusCode!: HttpStatusCode;
+  readonly validationErrors?: HttpArmoldError;
 
-  constructor(statusCode: HttpStatusErrorCode, message: string = 'ciencia_error', cienciaErrors?: CienciaError[]) {
-    super(message, statusCode, cienciaErrors);
+  constructor(statusCode: HttpStatusCode, message: string = 'armold_error', armoldErrors?: ArmoldError[]) {
+    super(message, statusCode, armoldErrors);
   }
 }
 
 export const notFoundError = (): void => {
-  throw new HTTPCienciaError(HttpStatusErrorCode.NotFound, 'error');
+  throw new HTTPArmoldError(HttpStatusCode.NotFound, 'error');
 };
