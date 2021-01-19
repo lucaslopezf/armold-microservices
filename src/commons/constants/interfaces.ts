@@ -1,6 +1,6 @@
 export interface PaginatedResponse<T> {
   limit: number;
-  offset: number;
+  page: number;
   total: number;
   results: T[];
 }

@@ -5,6 +5,7 @@ import { applyMiddleware, applyRoutes } from './util';
 import middlewares from '../../middlewares';
 import errorHandlers from '../../middlewares/errorHandlers';
 import { Route, Wrapper } from './types';
+import { logger } from '../..';
 
 const app = express();
 
@@ -22,6 +23,6 @@ export const startServer = (
   if (applyCommonsErrors) applyMiddleware(errorHandlers, app);
 
   const server = http.createServer(app);
-  server.listen(port, () => console.log(`Server is running ${port}`));
+  server.listen(port, () => logger.info(`Server is running ${port}`));
   return app;
 };
