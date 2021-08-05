@@ -1,16 +1,25 @@
+import { ErrorCode, ErrorDescription, HttpStatusCode } from '../..';
+import { BaseError } from './BaseError';
 import { HTTPClientError } from './HTTPClientError';
-import { HttpStatusCode } from '../../commons/constants';
-import { ArmoldError, HttpArmoldError } from '.';
 
-export class HTTPArmoldError extends HTTPClientError {
-  statusCode!: HttpStatusCode;
-  readonly validationErrors?: HttpArmoldError;
-
-  constructor(statusCode: HttpStatusCode, armoldErrors?: ArmoldError[], message: string = 'armold_error') {
-    super(message, statusCode, armoldErrors);
+export class HTTP400Error extends HTTPClientError {
+  constructor(
+    messageOrErrors: string | BaseError[] = ErrorDescription.BadRequest,
+    code: string = ErrorCode.BadRequest
+  ) {
+    if (messageOrErrors instanceof Array) {
+      super(ErrorDescription.BadRequest, code, HttpStatusCode.BadRequest, messageOrErrors);
+    } else {
+      super(messageOrErrors, code, HttpStatusCode.BadRequest);
+    }
+  }
+}
+export class HTTP404Error extends HTTPClientError {
+  constructor(message: string = ErrorDescription.NotFound, code: string = ErrorCode.NotFound) {
+    super(message, code, HttpStatusCode.NotFound);
   }
 }
 
 export const notFoundError = (): void => {
-  throw new HTTPArmoldError(HttpStatusCode.NotFound, undefined, 'error');
+  throw new HTTP404Error();
 };

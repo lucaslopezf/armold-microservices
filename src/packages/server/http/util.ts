@@ -1,5 +1,3 @@
-/* eslint-disable security/detect-object-injection */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router } from 'express';
 import { Wrapper, Route } from './types';
 

@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable security/detect-object-injection */
-
 export interface Mapping {
   label: string;
-  value: any;
+  value: unknown;
 }
 
 export interface MapperConfig {
@@ -11,8 +8,8 @@ export interface MapperConfig {
 }
 
 export interface Mapper<T extends MapperConfig, M extends keyof T> {
-  mapToLabel(key: M, value?: any): string;
-  mapToValue(key: M, value?: string): any;
+  mapToLabel(key: M, value?: unknown): string;
+  mapToValue(key: M, value?: string): unknown;
 }
 
 export const createMapper = <T extends MapperConfig, M extends keyof T>(mapperConfig: T): Mapper<T, M> => {
@@ -20,16 +17,12 @@ export const createMapper = <T extends MapperConfig, M extends keyof T>(mapperCo
     return mapperConfig[key];
   };
 
-  const hasValue = (property: any, value: any): boolean => {
-    if (Array.isArray(property)) {
-      return property.includes(value);
-    } else {
-      return property === value;
-    }
-  };
-
-  const findByProperty = (key: M, property: keyof Mapping, value: any): Mapping => {
+  const findByProperty = (key: M, property: keyof Mapping, value: unknown): Mapping => {
     const mappings = find(key);
+
+    const hasValue = (property: unknown, value: unknown): boolean => {
+      return property === value;
+    };
 
     const mapping = mappings.find((x) => hasValue(x[property], value));
     if (!mapping) return { label: '', value: null };
@@ -38,10 +31,10 @@ export const createMapper = <T extends MapperConfig, M extends keyof T>(mapperCo
   };
 
   return {
-    mapToLabel: (key: M, value?: any): string => {
+    mapToLabel: (key: M, value?: unknown): string => {
       return findByProperty(key, 'value', value).label;
     },
-    mapToValue: (key: M, value?: string): any => {
+    mapToValue: (key: M, value?: string): unknown => {
       return findByProperty(key, 'label', value).value;
     },
   };

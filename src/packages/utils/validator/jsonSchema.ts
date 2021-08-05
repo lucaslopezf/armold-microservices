@@ -1,23 +1,22 @@
 import ajv, { ErrorObject } from 'ajv';
-import { ValidationError } from './';
+import { BaseError } from '../..';
 
-const toValidationError = ({ keyword, message, dataPath }: ErrorObject): ValidationError => {
+const toBaseError = ({ keyword, message, dataPath }: ErrorObject): BaseError => {
   const property = dataPath.replace('.', '');
-  const code = `schema.${property}.${keyword}`.replace(/[^a-z-A-Z.]/g, '');
-
+  const code = `${property}.${keyword}`;
+  const detail = `${property} ${message}`;
   return {
     code,
-    message,
-    property,
+    detail,
   };
 };
 
-export const validateJsonSchema = (schema: string | boolean | object, data: object): ValidationError[] => {
+export const validateJsonSchema = (schema: string | boolean | object, data: object): BaseError[] => {
   const validator = new ajv({ allErrors: true, errorDataPath: 'property' });
   const isValid = validator.validate(schema, data);
 
   if (!isValid && validator.errors) {
-    return validator.errors.map((x) => toValidationError(x));
+    return validator.errors.map((x) => toBaseError(x));
   }
 
   return [];

@@ -1,12 +1,12 @@
 import { Headers } from '../../commons';
 import { Request, Response, Router, NextFunction } from 'express';
-import parser from 'body-parser';
+import { urlencoded, json } from 'body-parser';
 import compression from 'compression';
 import { v1 as uuidv1 } from 'uuid';
 
 export const handleBodyRequestParsing = (router: Router): void => {
-  router.use(parser.urlencoded({ extended: true }));
-  router.use(parser.json());
+  router.use(urlencoded({ extended: true }));
+  router.use(json());
 };
 
 export const handleCompression = (router: Router): void => {

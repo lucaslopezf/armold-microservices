@@ -26,3 +26,5 @@ export const startServer = (
   server.listen(port, () => logger.info(`Server is running ${port}`));
   return app;
 };
+
+export { Express, Request, Response } from 'express';

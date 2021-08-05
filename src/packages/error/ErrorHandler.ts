@@ -1,20 +1,18 @@
 import { Response, NextFunction } from 'express';
 import { HTTPClientError } from '.';
-import { logger } from '..';
-import { HttpStatusCode, Environment, ErrorDescription, ErrorCode } from '../../commons/constants';
+import { HttpStatusCode, Environment, ErrorDescription } from '../../commons/constants';
 import { v1 as uuidv1 } from 'uuid';
+import { logger } from '../logging';
 
 export const clientError = (err: Error, res: Response, next: NextFunction): void => {
   logger.info(err);
   if (err instanceof HTTPClientError) {
     const { id, status, message, errors } = err;
-    res.status(err.status).send({
-      id: id,
-      status: status,
-      message: message,
-      errors: errors,
+    res.status(status).send({
+      id,
+      message,
+      errors,
     });
-    return next();
   } else {
     next(err);
   }
@@ -28,16 +26,16 @@ export const serverError = (err: Error, res: Response, next: NextFunction): void
     message: err.message,
     stack: err.stack,
   });
+
   if (process.env.NODE_ENV === Environment.Production) {
     res.status(HttpStatusCode.InternalServerError).send({
       id: errorId,
       message: ErrorDescription.InternalServerError,
-      code: ErrorCode.InternalServerError,
     });
   } else {
     res.status(HttpStatusCode.InternalServerError).send({
-      message: err.message,
-      code: ErrorCode.InternalServerError,
+      id: errorId,
+      message: err.stack,
     });
   }
 };
