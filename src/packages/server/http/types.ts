@@ -9,3 +9,12 @@ export type Route = {
   method: string;
   handler: Handler | Handler[];
 };
+
+export interface StartServer {
+  port: number;
+  routes: Route[];
+  customizablesMiddlewares?: Wrapper[];
+  metricsPort?: number;
+  applyCommonsMiddlewares?: boolean;
+  applyCommonsErrors?: boolean;
+}

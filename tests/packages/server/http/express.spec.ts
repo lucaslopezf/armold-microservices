@@ -17,19 +17,32 @@ describe('packages/server/http test', () => {
   ];
 
   it('Startserver with customMiddlewares', () => {
-    const express = startServer(8081, routesMock, middlewares);
+    const express = startServer({
+      port: 8081,
+      routes: routesMock,
+      customizablesMiddlewares: middlewares,
+    });
 
     expect(express.name).toEqual('app');
   });
 
   it('Startserver with applyCommonsMiddlewares and applyCommonsErrors = false', () => {
-    const express = startServer(8081, routesMock, middlewares, false, false);
+    const express = startServer({
+      port: 8081,
+      routes: routesMock,
+      customizablesMiddlewares: middlewares,
+      applyCommonsMiddlewares: false,
+      applyCommonsErrors: false,
+    });
 
     expect(express.name).toEqual('app');
   });
 
   it('Startserver without customMiddlewares', () => {
-    const express = startServer(8081, routesMock, undefined);
+    const express = startServer({
+      port: 8081,
+      routes: routesMock,
+    });
 
     expect(express.name).toEqual('app');
   });
