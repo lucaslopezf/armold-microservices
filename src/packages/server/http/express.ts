@@ -35,3 +35,4 @@ export const startServer = ({
 };
 
 export { Express, Request, Response } from 'express';
+export { StartServer } from './types';

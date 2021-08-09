@@ -10,11 +10,11 @@ export type Route = {
   handler: Handler | Handler[];
 };
 
-export interface StartServer {
+export type StartServer = {
   port: number;
   routes: Route[];
   customizablesMiddlewares?: Wrapper[];
   metricsPort?: number;
   applyCommonsMiddlewares?: boolean;
   applyCommonsErrors?: boolean;
-}
+};
