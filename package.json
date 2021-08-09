@@ -1,6 +1,6 @@
 {
   "name": "armold-microservices",
-  "version": "1.0.32-beta",
+  "version": "1.0.4-beta",
   "description": "Armold microservices",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
